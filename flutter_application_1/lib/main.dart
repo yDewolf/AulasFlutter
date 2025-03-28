@@ -15,6 +15,11 @@ class PrimeiraTela extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.menu),
+            color: Colors.white,
+          ),
           title: const Text(
             "ZapZap",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -31,17 +36,20 @@ class PrimeiraTela extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            height: 200,
-            width: 200,
+            height: 300,
+            width: 300,
             color: Colors.black,
             padding: EdgeInsets.all(10),
 
-            child: Center(
-              child: const Text(
-                "Eu quando a engrenagem está sólida",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-                textAlign: TextAlign.justify,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  "Eu quando a engrenagem está sólida",
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  textAlign: TextAlign.justify,
+                ),
+                SizedBox(height: 10),
+              ],
             ),
           ),
         ),
