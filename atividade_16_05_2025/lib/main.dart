@@ -31,53 +31,45 @@ class Home extends StatelessWidget {
                     SearchBar(),
                   ],
                 ),
-                IntrinsicWidth(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    spacing: 20.0,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 20.0,
-                        children: [
-                          ButtonWithText(text: "História", icon: Icons.book),
-                          ButtonWithText(
-                            text: "Matemática",
-                            icon: Icons.numbers,
-                          ),
-                          ButtonWithText(
-                            text: "Língua Portuguesa",
-                            icon: Icons.language,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 20.0,
-                        children: [
-                          ButtonWithText(text: "Geografia", icon: Icons.map),
-                          ButtonWithText(
-                            text: "Biologia",
-                            icon: Icons.bug_report,
-                          ),
-                          ButtonWithText(text: "Química", icon: Icons.circle),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        spacing: 20.0,
-                        children: [
-                          ButtonWithText(
-                            text: "Física",
-                            icon: Icons.arrow_downward,
-                          ),
-                          ButtonWithText(text: "Artes", icon: Icons.color_lens),
-                          ButtonWithText(text: "Filosofia", icon: Icons.search),
-                        ],
-                      ),
-                    ],
-                  ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      spacing: 20.0,
+                      children: [
+                        ButtonWithText(text: "História", icon: Icons.book),
+                        ButtonWithText(text: "Matemática", icon: Icons.numbers),
+                        ButtonWithText(
+                          text: "Língua Portuguesa",
+                          icon: Icons.language,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      spacing: 20.0,
+                      children: [
+                        ButtonWithText(text: "Geografia", icon: Icons.map),
+                        ButtonWithText(
+                          text: "Biologia",
+                          icon: Icons.bug_report,
+                        ),
+                        ButtonWithText(text: "Química", icon: Icons.circle),
+                      ],
+                    ),
+                    Column(
+                      spacing: 20.0,
+                      children: [
+                        ButtonWithText(
+                          text: "Física",
+                          icon: Icons.arrow_downward,
+                        ),
+                        ButtonWithText(text: "Artes", icon: Icons.color_lens),
+                        ButtonWithText(text: "Filosofia", icon: Icons.search),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -129,7 +121,8 @@ class ButtonWithText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: SIZE + 16.0,
+          width: SIZE + 32.0,
+          height: SIZE + 32.0,
           decoration: BoxDecoration(
             color: Colors.blueGrey,
             borderRadius: BorderRadius.circular(8),
@@ -141,7 +134,11 @@ class ButtonWithText extends StatelessWidget {
             ),
           ),
         ),
-        Text(text, textAlign: TextAlign.justify),
+        Container(
+          width: SIZE + 32.0,
+          height: SIZE + 32.0,
+          child: Row(children: [Flexible(child: Text(text))]),
+        ),
       ],
     );
   }
