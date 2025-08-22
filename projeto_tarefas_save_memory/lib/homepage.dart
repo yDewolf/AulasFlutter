@@ -8,6 +8,71 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _showForm(BuildContext context) {
+    final  TextEditingController imageController = TextEditingController();
+    final  TextEditingController descricaoController = TextEditingController();
+
+    showDialog(context: context, 
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0)
+          ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Cadastrar atividade", 
+                          style: TextStyle(fontSize: 20, fontFamily: "Verdana", fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          onPressed: () => {
+                            Navigator.of(context).pop()
+                          }, 
+                          icon: Icon(Icons.close)
+                        )
+                      ],
+                    ),
+                    TextField(
+                      controller: imageController,
+                      decoration: InputDecoration(
+                        labelText: "URL da Imagem da Tarefa"
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    TextField(
+                      controller: descricaoController,
+                      decoration: InputDecoration(
+                        labelText: "Descrição da Tarefa"
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {}, 
+                          child: Text("Cancelar")
+                        ),
+                        ElevatedButton(
+                          onPressed: () {}, 
+                          child: Text("Salvar")
+                        ),
+                      ],
+                    )
+                  ],
+              ),
+            ),
+          )
+        );
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +81,9 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.blueGrey,
       ),
       body: Tarefas(),
+      floatingActionButton: FloatingActionButton(onPressed: () => {
+        _showForm(context)
+      }, child: Icon(Icons.add),),
     );
   }
 }
