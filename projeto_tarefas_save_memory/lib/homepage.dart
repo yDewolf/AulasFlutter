@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
                         labelText: "Descrição da Tarefa"
                       ),
                     ),
+                    SizedBox(height: 20.0,),
                     Row(
                       children: [
                         ElevatedButton(
@@ -59,7 +60,9 @@ class _HomePageState extends State<HomePage> {
                           child: Text("Cancelar")
                         ),
                         ElevatedButton(
-                          onPressed: () {}, 
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }, 
                           child: Text("Salvar")
                         ),
                       ],
@@ -121,13 +124,93 @@ class Tarefas extends StatelessWidget {
 }
 
 class Tarefa extends StatelessWidget {
-  final String image_link;
-  final String name;
-  final String description;
-  const Tarefa(this.image_link, this.name, this.description, {super.key});
+  String image_link;
+  String name;
+  String description;
+
+  Tarefa(this.image_link, this.name, this.description, {super.key});
+
+  void _showEditForm(BuildContext context) {
+    final TextEditingController nomeController = TextEditingController();
+    final TextEditingController imageController = TextEditingController();
+    final TextEditingController descricaoController = TextEditingController();
+
+    showDialog(context: context, 
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0)
+          ),
+          child: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Editar Tarefa", 
+                          style: TextStyle(fontSize: 20, fontFamily: "Verdana", fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                          onPressed: () => {
+                            Navigator.of(context).pop()
+                          }, 
+                          icon: Icon(Icons.close)
+                        )
+                      ],
+                    ),
+                    TextField(
+                      controller: nomeController,
+                      decoration: InputDecoration(
+                        labelText: "Nome da Tarefa"
+                      ),
+                    ),
+                    TextField(
+                      controller: imageController,
+                      decoration: InputDecoration(
+                        labelText: "URL da Imagem da Tarefa"
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    TextField(
+                      controller: descricaoController,
+                      decoration: InputDecoration(
+                        labelText: "Descrição da Tarefa"
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {}, 
+                          child: Text("Cancelar")
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            image_link = imageController.text;
+                            description = descricaoController.text;
+                            name = nomeController.text;
+
+                            Navigator.of(context).pop();
+                          }, 
+                          child: Text("Salvar")
+                        ),
+                      ],
+                    )
+                  ],
+              ),
+            ),
+          )
+        );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Stack(
@@ -174,7 +257,7 @@ class Tarefa extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
-                          onPressed: () => {print("OIIII")},
+                          onPressed: () => {_showEditForm(context)},
                           child: Icon(Icons.edit),
                         ),
                         ElevatedButton(
