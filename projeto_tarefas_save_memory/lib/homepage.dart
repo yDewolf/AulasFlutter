@@ -21,10 +21,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _showFormEdit(BuildContext context) {
-    final TextEditingController nomeController = TextEditingController();
-    final TextEditingController imageController = TextEditingController();
-    final TextEditingController descricaoController = TextEditingController();
+  void _editarTarefas(int index, String nome, String descricao, String url) {
+    setState(() {
+      _tarefas[index] = {'url': url, 'description': descricao, 'name': nome};
+    });
+  }
+
+  void _showFormEdit(BuildContext context, int index) {
+    final TextEditingController nomeController = TextEditingController(
+      text: _tarefas[index]['name'],
+    );
+    final TextEditingController imageController = TextEditingController(
+      text: _tarefas[index]["url"],
+    );
+    final TextEditingController descricaoController = TextEditingController(
+      text: _tarefas[index]["description"],
+    );
 
     showDialog(
       context: context,
@@ -79,10 +91,10 @@ class _HomePageState extends State<HomePage> {
                       ElevatedButton(onPressed: () {}, child: Text("Cancelar")),
                       ElevatedButton(
                         onPressed: () {
-                          // image_link = imageController.text;
-                          // description = descricaoController.text;
-                          // name = nomeController.text;
-
+                          var url = imageController.text;
+                          var descricao = descricaoController.text;
+                          var nome = nomeController.text;
+                          _editarTarefas(index, nome, descricao, url);
                           Navigator.of(context).pop();
                         },
                         child: Text("Salvar"),
@@ -198,7 +210,7 @@ class _HomePageState extends State<HomePage> {
             _tarefas[index]["url"]!,
             _tarefas[index]["name"]!,
             _tarefas[index]["description"]!,
-            () => _showFormEdit(context),
+            () => _showFormEdit(context, index),
           );
         },
       ),
