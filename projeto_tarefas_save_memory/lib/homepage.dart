@@ -27,6 +27,46 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _deletarTarefa(int index) {
+    setState(() {
+      _tarefas.removeAt(index);
+    });
+  }
+
+  void _confirmarExclusao(BuildContext context, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Confirmar Exclusão"),
+          content: Text("Você tem certeza sobre as suas ações?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancelar"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _deletarTarefa(index);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Tarefa removida com sucesso !"),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+                Navigator.of(context).pop();
+              },
+              child: Text("Excluir"),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void _showFormEdit(BuildContext context, int index) {
     final TextEditingController nomeController = TextEditingController(
       text: _tarefas[index]['name'],
@@ -211,6 +251,7 @@ class _HomePageState extends State<HomePage> {
             _tarefas[index]["name"]!,
             _tarefas[index]["description"]!,
             () => _showFormEdit(context, index),
+            () => _confirmarExclusao(context, index),
           );
         },
       ),
@@ -227,12 +268,14 @@ class Tarefa extends StatelessWidget {
   String name;
   String description;
   VoidCallback onEdit;
+  VoidCallback onRemove;
 
   Tarefa(
     this.image_link,
     this.name,
     this.description,
-    this.onEdit, {
+    this.onEdit,
+    this.onRemove, {
     super.key,
   });
 
@@ -288,8 +331,8 @@ class Tarefa extends StatelessWidget {
                           child: Icon(Icons.edit),
                         ),
                         ElevatedButton(
-                          onPressed: () => {print("VocÊ vai ser deletado!!")},
-                          child: Icon(Icons.remove),
+                          onPressed: onRemove,
+                          child: Icon(Icons.delete),
                         ),
                       ],
                     ),
