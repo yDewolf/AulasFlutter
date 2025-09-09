@@ -1,39 +1,18 @@
 // screens/pet_register.dart
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:projeto_pet_shop/components.dart';
+import 'package:projeto_pet_shop/classes/Pet.dart';
 
 class PetRegister extends StatefulWidget{
+  final List<Pet> pets;
+  PetRegister({super.key, required this.pets});
+
   @override
   State<StatefulWidget> createState() => _PetRegisterState();
-
-}
-
-
-// Código principalmente do:
-// https://api.flutter.dev/flutter/material/DropdownMenu-class.html
-typedef IconEntry = DropdownMenuEntry<PetTypes>;
-
-enum PetTypes {
-  dog('Cachorro', Icons.pets),
-  cat('Gato', Icons.cloud_outlined),
-  parrot('Papagaio', Icons.brush_outlined),
-  bird('Pássaro', Icons.favorite);
-
-  const PetTypes(this.label, this.icon);
-  final String label;
-  final IconData icon;
-
-  static final List<IconEntry> entries = UnmodifiableListView<IconEntry>(
-    values.map<IconEntry>(
-      (PetTypes icon) => IconEntry(value: icon, label: icon.label, leadingIcon: Icon(icon.icon)),
-    ),
-  );
 }
 
 class _PetRegisterState extends State<PetRegister> {
+  
   final TextEditingController nameController = TextEditingController();
   PetTypes? selectedPetType;
   final TextEditingController raceController = TextEditingController();
@@ -68,15 +47,35 @@ class _PetRegisterState extends State<PetRegister> {
     );
   }
 
-  void confirmPetRegister() {
-    // Fazer alguma coisa para salvar o pet eu acho
-    print(nameController.text);
-    print(raceController.text);
-    print(ageController.text);
-    print(imageControler.text);
-    print(selectedPetType?.label);
+  void _confirmPetRegister() {
+    addPet(
+      nameController.text,
+      raceController.text,
+      int.parse(ageController.text),
+      selectedPetType!,
+      imageControler.text
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Pet adicionado com sucesso!"),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
-  
+
+  void addPet(String name, String race, int age, PetTypes type, String? imageUrl) {
+    final Pet newPet = Pet(
+      name: name, 
+      race: race, 
+      age: age, 
+      petType: type,
+      imageUrl: imageUrl
+    );
+
+    widget.pets.add(newPet);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +167,7 @@ class _PetRegisterState extends State<PetRegister> {
                 _showConfirmForm(
                   context, 
                   "Tem certeza que quer cadastrar esse pet?",
-                  confirmPetRegister
+                  _confirmPetRegister
                 );
               }
             ),

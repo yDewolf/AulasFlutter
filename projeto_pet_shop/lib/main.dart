@@ -1,13 +1,15 @@
 // main.dart
 import 'package:flutter/material.dart';
+import 'package:projeto_pet_shop/classes/AppVariables.dart';
 import 'package:projeto_pet_shop/navigator.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+  final AppVariables app_variables = AppVariables(); 
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class MainApp extends StatelessWidget {
       title: "PetShop!",
       theme: ThemeData(primarySwatch: Colors.lightGreen),
       debugShowCheckedModeBanner: false,
-      home: PageNavigator(),
+      home: PageNavigator(app_variables: app_variables,)
     );
   }
 }
