@@ -73,113 +73,118 @@ class _PetRegisterState extends State<PetRegister> {
       imageUrl: imageUrl
     );
 
-    widget.pets.add(newPet);
+    setState(() {
+      widget.pets.add(newPet);
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // Fields
-        Column(
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: "Nome do Pet"
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          // Fields
+          Column(
+            spacing: 10,
+            children: [
+              TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  labelText: "Nome do Pet"
+                ),
               ),
-            ),
-            DropdownMenu<PetTypes>(
-              label: Text("Tipo de pet"),
-              dropdownMenuEntries: PetTypes.entries,
-              onSelected: (PetTypes? petType) {
-                if (petType is PetTypes) {
-                  selectedPetType = petType;
-                }
-              },
-            ),
-            TextField(
-              controller: raceController,
-              decoration: InputDecoration(
-                labelText: "Raça"
-              ),
-            ),
-            TextField(
-              controller: ageController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              decoration: InputDecoration(
-                labelText: "Idade em anos"
-              ),
-            ),
-            TextField(
-              controller: imageControler,
-              decoration: InputDecoration(
-                labelText: "Url Foto (opcional)"
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            TextButton(
-              child: Text("Salvar"),
-              onPressed: () {
-                List<String> missingFields = [];
-                final Map<String, TextEditingController> requiredFields = {
-                  "Nome": nameController,
-                  "Idade": ageController,
-                };
-                for (var fieldName in requiredFields.keys) {
-                  if (requiredFields[fieldName]!.text.isNotEmpty) {
-                    continue;
+              DropdownMenu<PetTypes>(
+                label: Text("Tipo de pet"),
+                dropdownMenuEntries: PetTypes.entries,
+                onSelected: (PetTypes? petType) {
+                  if (petType is PetTypes) {
+                    selectedPetType = petType;
                   }
-                  missingFields.add(fieldName);
-                }
-
-                if (selectedPetType == null) {
-                  missingFields.add("Tipo de Pet");
-                }
-
-                if (missingFields.isNotEmpty) {
-                  String message = "Você deve preencher os campos: ";
-                  int idx = 0;
-                  for (var field in missingFields) {
-                    if (idx != 0) {
-                      message += ", ";
+                },
+              ),
+              TextField(
+                controller: raceController,
+                decoration: InputDecoration(
+                  labelText: "Raça"
+                ),
+              ),
+              TextField(
+                controller: ageController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                decoration: InputDecoration(
+                  labelText: "Idade em anos"
+                ),
+              ),
+              TextField(
+                controller: imageControler,
+                decoration: InputDecoration(
+                  labelText: "Url Foto (opcional)"
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              TextButton(
+                child: Text("Salvar"),
+                onPressed: () {
+                  List<String> missingFields = [];
+                  final Map<String, TextEditingController> requiredFields = {
+                    "Nome": nameController,
+                    "Idade": ageController,
+                  };
+                  for (var fieldName in requiredFields.keys) {
+                    if (requiredFields[fieldName]!.text.isNotEmpty) {
+                      continue;
                     }
-                    idx += 1;
-                    message += field;
+                    missingFields.add(fieldName);
                   }
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(message),
-                      duration: Duration(seconds: 2),
-                    ),
+      
+                  if (selectedPetType == null) {
+                    missingFields.add("Tipo de Pet");
+                  }
+      
+                  if (missingFields.isNotEmpty) {
+                    String message = "Você deve preencher os campos: ";
+                    int idx = 0;
+                    for (var field in missingFields) {
+                      if (idx != 0) {
+                        message += ", ";
+                      }
+                      idx += 1;
+                      message += field;
+                    }
+      
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                    return;
+                  }
+      
+                  _showConfirmForm(
+                    context, 
+                    "Tem certeza que quer cadastrar esse pet?",
+                    _confirmPetRegister
                   );
-                  return;
                 }
-
-                _showConfirmForm(
-                  context, 
-                  "Tem certeza que quer cadastrar esse pet?",
-                  _confirmPetRegister
-                );
-              }
-            ),
-            TextButton(
-              child: Text("Cancelar"),
-              onPressed: () {
-                
-              }, 
-            ),
-          ],
-        )
-      ],
+              ),
+              TextButton(
+                child: Text("Cancelar"),
+                onPressed: () {
+                  
+                }, 
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

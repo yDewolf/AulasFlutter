@@ -1,6 +1,7 @@
 // screens/home.dart
 import 'package:flutter/material.dart';
 import 'package:projeto_pet_shop/classes/Pet.dart';
+import 'package:projeto_pet_shop/components.dart';
 
 class HomePage extends StatefulWidget{
   final List<Pet> pets;
@@ -13,17 +14,14 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("HIIII you are on the home page"),
-        Builder(builder: (BuildContext context) {
-          for (var pet in widget.pets) {
-              return Text(pet.name);
-          }
+    final pets = widget.pets;
 
-          return Text("No Pet Was Found");
-        })
-      ],
+    return ListView.builder(
+      padding: EdgeInsets.all(16.0),
+      itemCount: pets.length,
+      itemBuilder: (BuildContext context, int index) {
+          return PetCard(petData: pets[index],);
+      }
     );
   }
 }

@@ -21,8 +21,7 @@ class _PageNavigatorState extends State<PageNavigator> {
   final PageController _pageController = PageController();
   final AppVariables app_variables = AppVariables();
 
-  int currentIdx = 0;
-
+  int currentIdx = 1;
 
   void _onPageChanged(int index) {
     setState(() {
@@ -39,6 +38,8 @@ class _PageNavigatorState extends State<PageNavigator> {
     final screens = [
       HomePage(pets: app_variables.pets), PetRegister(pets: app_variables.pets)
     ];
+
+    // Estou usando isso aqui para testar sem ter que cadastrar  
     // app_variables.pets.add(Pet(name: "name", race: "race", age: -1, petType: PetTypes.dog));
 
     return Scaffold(
