@@ -59,11 +59,17 @@ class _PetListState extends State<PetList> {
         return Dialog(
             child: Container(
               padding: EdgeInsets.all(16.0),
-              child: PetEditForm(pets: widget.pets, petData: petData,)),
+              child: PetEditForm(
+                pets: widget.pets, 
+                petData: petData, 
+                onConfirm: () {
+                  _editPet(index, petData);
+                }
+              )
+            ),
         );
     });
 
-    _editPet(index, petData);
   }
 
   @override

@@ -33,7 +33,7 @@ class _PageNavigatorState extends State<PageNavigator> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(pets: widget.app_variables.pets), PetEditForm(pets: widget.app_variables.pets)
+      HomePage(pets: widget.app_variables.pets), PetEditForm(pets: widget.app_variables.pets, onConfirm: () {},)
     ];
 
     return Scaffold(

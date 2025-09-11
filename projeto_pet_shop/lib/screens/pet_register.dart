@@ -17,17 +17,23 @@ class _PetRegisterState extends State<PetRegister> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.0),
-      child: PetEditForm(pets: widget.pets),
+      child: PetEditForm(pets: widget.pets, onConfirm: () {}),
     );
   }
 
 }
 
+enum PetFormModes {
+  Add,
+  Edit
+}
+
 class PetEditForm extends StatefulWidget{
   final List<Pet> pets;
   Pet? petData;
+  VoidCallback onConfirm;
 
-  PetEditForm({super.key, required this.pets, this.petData});
+  PetEditForm({super.key, required this.pets, this.petData, required this.onConfirm});
 
   @override
   State<StatefulWidget> createState() => _PetEditFormState();
@@ -55,6 +61,8 @@ class _PetEditFormState extends State<PetEditForm> {
         duration: Duration(seconds: 2),
       ),
     );
+
+    widget.onConfirm();
   }
 
   void addPet(String name, String race, int age, PetTypes type, String imageUrl) {
@@ -79,6 +87,15 @@ class _PetEditFormState extends State<PetEditForm> {
       selectedPetType,
       imageController.text
     );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Pet editado com sucesso!"),
+        duration: Duration(seconds: 2),
+      ),
+    );
+
+    widget.onConfirm();
   }
 
   void editPet(String name, String race, int age, PetTypes type, String imageUrl) {
@@ -97,9 +114,9 @@ class _PetEditFormState extends State<PetEditForm> {
   Widget build(BuildContext context) {
     // 1 -> Adicionar
     // 2 -> Editar
-    int mode = 1;
+    PetFormModes mode = PetFormModes.Add;
     if (widget.petData != null) {
-      mode = 2;
+      mode = PetFormModes.Edit;
       nameController.text = widget.petData!.name;
       raceController.text = widget.petData!.race;
       ageController.text = widget.petData!.age.toString();
@@ -164,11 +181,13 @@ class _PetEditFormState extends State<PetEditForm> {
           ],
         ),
         Builder(builder: (context) {
-          if (mode == 1) {
-            return _PetAddButtons(nameController: nameController, ageController: ageController, selectedPetType: selectedPetType, confirmPetRegister: _confirmPetRegister);
-          }
+          switch (mode) {
+            case PetFormModes.Add: 
+              return _PetAddButtons(nameController: nameController, ageController: ageController, selectedPetType: selectedPetType, confirmPetRegister: _confirmPetRegister);
 
-          return _PetEditButtons(confirmPetEdit: _confirmPetEdit);
+            case PetFormModes.Edit:
+              return _PetEditButtons(confirmPetEdit: _confirmPetEdit);
+          }
         })
       ],
     );
@@ -192,6 +211,12 @@ class _PetAddButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        TextButton(
+          child: Text("Cancelar"),
+          onPressed: () {
+            
+          }, 
+        ),
         TextButton(
           child: Text("Salvar"),
           onPressed: () {
@@ -238,12 +263,6 @@ class _PetAddButtons extends StatelessWidget {
             );
           }
         ),
-        TextButton(
-          child: Text("Cancelar"),
-          onPressed: () {
-            
-          }, 
-        ),
       ],
     );
   }  
@@ -259,6 +278,12 @@ class _PetEditButtons extends StatelessWidget {
     return Row(
       children: [
         TextButton(
+          child: Text("Cancelar"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          }, 
+        ),
+        TextButton(
           child: Text("Salvar"),
           onPressed: () {
             // Navigator.of(context).pop();
@@ -270,12 +295,6 @@ class _PetEditButtons extends StatelessWidget {
                 Navigator.pop(context);
               }
             );
-          }, 
-        ),
-        TextButton(
-          child: Text("Cancelar"),
-          onPressed: () {
-            Navigator.of(context).pop();
           }, 
         ),
       ],
