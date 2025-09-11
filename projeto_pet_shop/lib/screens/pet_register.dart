@@ -17,7 +17,12 @@ class _PetRegisterState extends State<PetRegister> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.0),
-      child: PetEditForm(pets: widget.pets, onConfirm: () {}),
+      child: Column(
+        children: [
+          Text("Cadastro de pets", style: TextStyle(fontSize: 20.0),),
+          PetEditForm(pets: widget.pets, onConfirm: () {}),
+        ],
+      ),
     );
   }
 
@@ -135,42 +140,50 @@ class _PetEditFormState extends State<PetEditForm> {
                 labelText: "Nome do Pet"
               ),
             ),
-            Builder(
-              builder: (context) {
-                PetTypes defaultPetType = PetTypes.cat; 
-                if (widget.petData != null) {
-                  defaultPetType = widget.petData!.petType;
-                }
-
-                return DropdownMenu<PetTypes>(
-                  label: Text("Tipo de pet"),
-                  initialSelection: defaultPetType,
-                  dropdownMenuEntries: PetTypes.entries,
-                  onSelected: (PetTypes? petType) {
-                    if (petType is PetTypes) {
-                      setState(() {
-                        selectedPetType = petType;
-                      });
-                    }
-                  },
-                );
-              }
-            ),
+            
             TextField(
               controller: raceController,
               decoration: InputDecoration(
                 labelText: "Raça"
               ),
             ),
-            TextField(
-              controller: ageController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
+            Row(
+              spacing: 10.0,
+              children: [
+                Flexible(
+                  child: TextField(
+                    controller: ageController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    decoration: InputDecoration(
+                      labelText: "Idade em anos"
+                    ),
+                  ),
+                ),
+                Builder(
+                  builder: (context) {
+                    PetTypes defaultPetType = PetTypes.cat; 
+                    if (widget.petData != null) {
+                      defaultPetType = widget.petData!.petType;
+                    }
+                
+                    return DropdownMenu<PetTypes>(
+                      label: Text("Tipo de pet"),
+                      initialSelection: defaultPetType,
+                      dropdownMenuEntries: PetTypes.entries,
+                      onSelected: (PetTypes? petType) {
+                        if (petType is PetTypes) {
+                          setState(() {
+                            selectedPetType = petType;
+                          });
+                        }
+                      },
+                    );
+                  }
+                ),
               ],
-              decoration: InputDecoration(
-                labelText: "Idade em anos"
-              ),
             ),
             TextField(
               controller: imageController,
@@ -210,6 +223,8 @@ class _PetAddButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      spacing: 10.0,
       children: [
         TextButton(
           child: Text("Cancelar"),
@@ -219,6 +234,7 @@ class _PetAddButtons extends StatelessWidget {
         ),
         TextButton(
           child: Text("Salvar"),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
           onPressed: () {
             List<String> missingFields = [];
             final Map<String, TextEditingController> requiredFields = {
@@ -276,6 +292,8 @@ class _PetEditButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      spacing: 10.0,
       children: [
         TextButton(
           child: Text("Cancelar"),
@@ -285,6 +303,7 @@ class _PetEditButtons extends StatelessWidget {
         ),
         TextButton(
           child: Text("Salvar"),
+          style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
           onPressed: () {
             // Navigator.of(context).pop();
             GeneralUtils.showConfirmForm(

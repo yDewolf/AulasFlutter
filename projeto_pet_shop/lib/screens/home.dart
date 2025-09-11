@@ -57,16 +57,28 @@ class _PetListState extends State<PetList> {
       context: context, 
       builder: (context) {
         return Dialog(
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              child: PetEditForm(
-                pets: widget.pets, 
-                petData: petData, 
-                onConfirm: () {
-                  _editPet(index, petData);
-                }
-              )
-            ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              spacing: 10,
+              children: [
+                Text(
+                  "Editando o pet: ${petData.name}",
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
+                ),
+                PetEditForm(
+                  pets: widget.pets, 
+                  petData: petData, 
+                  onConfirm: () {
+                    _editPet(index, petData);
+                  }
+                ),
+              ],
+            )
+          ),
         );
     });
 

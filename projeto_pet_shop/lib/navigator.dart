@@ -33,7 +33,7 @@ class _PageNavigatorState extends State<PageNavigator> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(pets: widget.app_variables.pets), PetEditForm(pets: widget.app_variables.pets, onConfirm: () {},)
+      HomePage(pets: widget.app_variables.pets), PetRegister(pets: widget.app_variables.pets)
     ];
 
     return Scaffold(
@@ -48,6 +48,7 @@ class _PageNavigatorState extends State<PageNavigator> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
+        currentIndex: currentIdx,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.pets), 
