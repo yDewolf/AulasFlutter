@@ -35,7 +35,7 @@ class PetEditForm extends StatefulWidget{
 
 class _PetEditFormState extends State<PetEditForm> {
   final TextEditingController nameController = TextEditingController();
-  PetTypes? selectedPetType;
+  PetTypes selectedPetType = PetTypes.cat;
   final TextEditingController raceController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController imageController = TextEditingController();
@@ -45,7 +45,7 @@ class _PetEditFormState extends State<PetEditForm> {
       nameController.text,
       raceController.text,
       int.parse(ageController.text),
-      selectedPetType!,
+      selectedPetType,
       imageController.text
     );
 
@@ -76,7 +76,7 @@ class _PetEditFormState extends State<PetEditForm> {
       nameController.text,
       raceController.text,
       int.parse(ageController.text),
-      selectedPetType!,
+      selectedPetType,
       imageController.text
     );
   }
@@ -131,7 +131,9 @@ class _PetEditFormState extends State<PetEditForm> {
                   dropdownMenuEntries: PetTypes.entries,
                   onSelected: (PetTypes? petType) {
                     if (petType is PetTypes) {
-                      selectedPetType = petType;
+                      setState(() {
+                        selectedPetType = petType;
+                      });
                     }
                   },
                 );
