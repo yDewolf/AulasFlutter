@@ -16,12 +16,13 @@ class MainApp extends StatefulWidget {
   State<StatefulWidget> createState() => _MainAppState();
 }
 
+
 class _MainAppState extends State<MainApp> {
 
   @override
   Widget build(BuildContext context) {
     setState(() {
-      widget.app_variables.pets.add(Pet(name: "name", race: "race", age: -1, petType: PetTypes.dog));
+      widget.app_variables.pets.add(Pet(name: "name", race: "race", age: -1, petType: PetTypes.dog, imageUrl: ""));
     });
 
     return MaterialApp(

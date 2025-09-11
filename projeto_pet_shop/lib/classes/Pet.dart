@@ -30,13 +30,13 @@ class Pet {
   String race;
   int age;
   PetTypes petType;
-  String? imageUrl;
+  String imageUrl;
 
   Pet({
     required this.name, 
     required this.race, 
     required this.age, 
     required this.petType,
-    this.imageUrl
+    required this.imageUrl
   });
 }
