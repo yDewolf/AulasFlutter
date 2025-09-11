@@ -14,8 +14,16 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final pets = widget.pets;
+    return PetList(pets: widget.pets);
+  }
+}
 
+class PetList extends StatelessWidget {
+  final List<Pet> pets;
+  PetList({super.key, required this.pets});
+  
+  @override
+  Widget build(BuildContext context) {
     return ListView.builder(
       padding: EdgeInsets.all(16.0),
       itemCount: pets.length,
@@ -24,4 +32,5 @@ class _HomePageState extends State<HomePage> {
       }
     );
   }
+  
 }
