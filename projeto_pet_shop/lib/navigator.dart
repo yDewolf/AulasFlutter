@@ -1,7 +1,7 @@
 // navigator.dart
 import 'package:flutter/material.dart';
 import 'package:projeto_pet_shop/classes/AppVariables.dart';
-import 'package:projeto_pet_shop/screens/home.dart';
+import 'package:projeto_pet_shop/screens/pet_list.dart';
 import 'package:projeto_pet_shop/screens/pet_register.dart';
 
 class PageNavigator extends StatefulWidget{
@@ -33,7 +33,7 @@ class _PageNavigatorState extends State<PageNavigator> {
   @override
   Widget build(BuildContext context) {
     final screens = [
-      HomePage(pets: widget.app_variables.pets), PetRegister(pets: widget.app_variables.pets)
+      PetListPage(pets: widget.app_variables.pets), PetRegister(pets: widget.app_variables.pets)
     ];
 
     return Scaffold(

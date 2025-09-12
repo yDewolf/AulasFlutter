@@ -6,15 +6,15 @@ import 'package:projeto_pet_shop/classes/Pet.dart';
 import 'package:projeto_pet_shop/components.dart';
 import 'package:projeto_pet_shop/screens/pet_register.dart';
 
-class HomePage extends StatefulWidget{
+class PetListPage extends StatefulWidget{
   final List<Pet> pets;
-  HomePage({super.key, required this.pets});
+  PetListPage({super.key, required this.pets});
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<StatefulWidget> createState() => _PetListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PetListPageState extends State<PetListPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
