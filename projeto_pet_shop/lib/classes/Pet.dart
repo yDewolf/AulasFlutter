@@ -10,9 +10,10 @@ typedef IconEntry = DropdownMenuEntry<PetTypes>;
 
 enum PetTypes {
   dog('Cachorro', Icons.pets),
-  cat('Gato', Icons.cloud_outlined),
-  parrot('Papagaio', Icons.brush_outlined),
-  bird('Pássaro', Icons.favorite);
+  cat('Gato', Icons.pets_sharp),
+  parrot('Papagaio', Icons.flight),
+  bird('Pássaro', Icons.flight),
+  rat('Rato', Icons.pest_control_rodent_rounded);
 
   const PetTypes(this.label, this.icon);
   final String label;

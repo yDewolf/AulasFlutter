@@ -15,13 +15,24 @@ class PetRegister extends StatefulWidget {
 class _PetRegisterState extends State<PetRegister> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          Text("Cadastro de pets", style: TextStyle(fontSize: 20.0),),
-          PetEditForm(pets: widget.pets, onConfirm: () {}),
-        ],
+    return Center(
+      child: SizedBox(
+        width: 400.0,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text("Cadastro de pets", style: TextStyle(fontSize: 20.0),),
+              Card(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PetEditForm(pets: widget.pets, onConfirm: () {})
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -137,14 +148,16 @@ class _PetEditFormState extends State<PetEditForm> {
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: "Nome do Pet"
+                labelText: "Nome do Pet",
+                border: OutlineInputBorder()
               ),
             ),
             
             TextField(
               controller: raceController,
               decoration: InputDecoration(
-                labelText: "Raça"
+                labelText: "Raça",
+                border: OutlineInputBorder()
               ),
             ),
             Row(
@@ -158,7 +171,8 @@ class _PetEditFormState extends State<PetEditForm> {
                       FilteringTextInputFormatter.digitsOnly
                     ],
                     decoration: InputDecoration(
-                      labelText: "Idade em anos"
+                      labelText: "Idade em anos",
+                border: OutlineInputBorder()
                     ),
                   ),
                 ),
@@ -188,7 +202,8 @@ class _PetEditFormState extends State<PetEditForm> {
             TextField(
               controller: imageController,
               decoration: InputDecoration(
-                labelText: "Url Foto (opcional)"
+                labelText: "Url Foto (opcional)",
+                border: OutlineInputBorder()
               ),
             ),
           ],
@@ -197,7 +212,7 @@ class _PetEditFormState extends State<PetEditForm> {
           switch (mode) {
             case PetFormModes.Add: 
               return _PetAddButtons(nameController: nameController, ageController: ageController, selectedPetType: selectedPetType, confirmPetRegister: _confirmPetRegister);
-
+    
             case PetFormModes.Edit:
               return _PetEditButtons(confirmPetEdit: _confirmPetEdit);
           }

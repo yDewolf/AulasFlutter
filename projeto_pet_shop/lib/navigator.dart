@@ -39,7 +39,6 @@ class _PageNavigatorState extends State<PageNavigator> {
     return Scaffold(
       appBar: AppBar(
         title: Text("PetShop!"),
-        backgroundColor: Colors.blueGrey,
       ),
       body: PageView(
         controller: _pageController,

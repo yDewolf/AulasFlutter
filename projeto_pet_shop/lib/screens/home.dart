@@ -1,5 +1,6 @@
 // screens/home.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:projeto_pet_shop/classes/GeneralUtils.dart';
 import 'package:projeto_pet_shop/classes/Pet.dart';
 import 'package:projeto_pet_shop/components.dart';
@@ -16,7 +17,19 @@ class HomePage extends StatefulWidget{
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return PetList(pets: widget.pets);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        spacing: 20.0,
+        children: [
+          Text(
+            "Consultar Pets",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          Flexible(child: PetList(pets: widget.pets)),
+        ],
+      ),
+    );
   }
 }
 
@@ -58,26 +71,29 @@ class _PetListState extends State<PetList> {
       builder: (context) {
         return Dialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              spacing: 10,
-              children: [
-                Text(
-                  "Editando o pet: ${petData.name}",
-                  style: TextStyle(
-                    fontSize: 20
+          child: SizedBox(
+            width: 400.0,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 10,
+                children: [
+                  Text(
+                    "Editando o pet: ${petData.name}",
+                    style: TextStyle(
+                      fontSize: 20
+                    ),
                   ),
-                ),
-                PetEditForm(
-                  pets: widget.pets, 
-                  petData: petData, 
-                  onConfirm: () {
-                    _editPet(index, petData);
-                  }
-                ),
-              ],
-            )
+                  PetEditForm(
+                    pets: widget.pets, 
+                    petData: petData, 
+                    onConfirm: () {
+                      _editPet(index, petData);
+                    }
+                  ),
+                ],
+              )
+            ),
           ),
         );
     });
@@ -86,24 +102,21 @@ class _PetListState extends State<PetList> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200.0,
-      height: double.infinity,
-      child: ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: widget.pets.length,
-        itemBuilder: (BuildContext context, int index) {
-            return PetCard(
-              petData: widget.pets[index],
-              editPet: () {
-                editPet(index);
-              },
-              deletePet: () {
-                deletePet(index);
-              },
-            );
-        }
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      padding: EdgeInsets.all(16.0),
+      itemCount: widget.pets.length,
+      itemBuilder: (BuildContext context, int index) {
+        return PetCard(
+          petData: widget.pets[index],
+          editPet: () {
+            editPet(index);
+          },
+          deletePet: () {
+            deletePet(index);
+          },
+        );
+      }
     );
   }
   

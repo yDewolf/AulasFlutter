@@ -47,7 +47,7 @@ class PetCard extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Icon(Icons.pets),
+                            Icon(petData.petType.icon),
                             Text(petData.petType.label),
                           ],
                         ),
@@ -62,11 +62,11 @@ class PetCard extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: editPet,
-                          icon: Icon(Icons.edit)
+                          icon: Icon(Icons.edit, color: Colors.blue,)
                         ),
                         IconButton(
                           onPressed: deletePet, 
-                          icon: Icon(Icons.delete)
+                          icon: Icon(Icons.delete, color: Colors.red,)
                         ),
                       ],
                     ),
