@@ -102,9 +102,8 @@ class _PetListState extends State<PetList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.all(16.0),
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2), 
       itemCount: widget.pets.length,
       itemBuilder: (BuildContext context, int index) {
         return PetCard(
